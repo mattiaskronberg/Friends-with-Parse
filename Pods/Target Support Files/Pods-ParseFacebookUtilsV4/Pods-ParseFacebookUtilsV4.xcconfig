@@ -1,0 +1,2 @@
+PODS_PARSEFACEBOOKUTILSV__LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/ParseFacebookUtilsV4"
+PODS_PARSEFACEBOOKUTILSV__OTHER_LDFLAGS = -ObjC -l"ParseFacebookUtilsV4" -l"sqlite3" -l"z" -framework "AudioToolbox" -framework "CFNetwork" -framework "CoreGraphics" -framework "CoreLocation" -framework "QuartzCore" -framework "Security" -framework "StoreKit" -framework "SystemConfiguration" -weak_framework "Accounts" -weak_framework "Social"
