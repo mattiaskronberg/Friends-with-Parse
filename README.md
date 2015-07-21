@@ -12,6 +12,6 @@ Parse.com is a free (limited requests and storage) NoSQL database hosting websit
 - *fromUser* **Pointer** to _User
 - *status* **String**
 
-##### Cloud Code
+#### Cloud Code
 As adding a friend means updating two users' *friends* column, Parse Cloud Code must be used (the only user one can modidy on client side is the logged in one). Install Cloud Code by following this guide https://parse.com/docs/ios/guide#command-line-installation
 The Cloud Code itself is included in the project (.js).
