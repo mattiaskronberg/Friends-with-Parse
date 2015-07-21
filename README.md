@@ -1,4 +1,4 @@
-# Friends-with-Parse
+# Friends with Parse.com
 Starter project for setting up a friend relation (including request) with Parse.com and Cocoapods, using Swift. Complete with Podfile. 
 
 ## Parse.com
