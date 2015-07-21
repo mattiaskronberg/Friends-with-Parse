@@ -189,9 +189,6 @@
                                             <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <connections>
-                                                <action selector="addFriend:" destination="H8z-JJ-dwj" eventType="touchUpInside" id="kFy-4m-4n2"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

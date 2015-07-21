@@ -158,7 +158,5 @@ class FriendListTableViewController: UITableViewController {
                 }
             }
         }
-        
     }
-
 }

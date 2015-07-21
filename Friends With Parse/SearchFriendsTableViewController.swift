@@ -49,10 +49,27 @@ class SearchFriendsTableViewController: UITableViewController, UISearchBarDelega
         let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! SearchUserTableViewCell
         let cellData = foundUsers[indexPath.row]
         cell.usernameLabel.text = cellData.username!
-        cell.user = cellData
+        cell.sendRequestButton.tag = indexPath.row
+        cell.sendRequestButton.addTarget(self, action: "sendRequest:", forControlEvents: .TouchUpInside)
         // Configure the cell...
 
         return cell
+    }
+    
+    func sendRequest(sender: UIButton!) {
+        let userToAdd = foundUsers[sender.tag]
+        var request = PFObject(className: "friendRequest")
+        request["fromUser"] = PFUser.currentUser()
+        request["toUser"] = userToAdd
+        request["status"] = "pending"
+        request.saveInBackgroundWithBlock{
+            (success: Bool, error: NSError?) -> Void in
+            if success {
+                println("Request sent")
+                sender.removeFromSuperview()
+                
+            }
+        }
     }
 
 

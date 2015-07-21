@@ -12,7 +12,6 @@ class SearchUserTableViewCell: UITableViewCell {
 
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var sendRequestButton: UIButton!
-    var user: PFUser?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,21 +23,4 @@ class SearchUserTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    
-    @IBAction func addFriend(sender: AnyObject)
-    {
-        println("Add Friend!")
-        var request = PFObject(className: "friendRequest")
-        request["fromUser"] = PFUser.currentUser()
-        request["toUser"] = user
-        request.saveInBackgroundWithBlock{
-            (success: Bool, error: NSError?) -> Void in
-            if success {
-                println("Request sent")
-                self.sendRequestButton.removeFromSuperview()
-            }
-        }
-    }
-
 }
