@@ -17,3 +17,7 @@ As adding a friend means updating two users' *friends* column, Parse Cloud Code 
 The Cloud Code itself is included in the project (.js).
 
 Cloud Code and Cloud Call function call was written by and posted to Treehouse forums by [Stone Preston]( https://teamtreehouse.com/stonepreston). I translated the function call from Objective C to Swift.
+
+## Warnings
+
+- As of this version, some parts of the project violate MVC. There are some action and network calls in cells. This will be patched in later versions. 
