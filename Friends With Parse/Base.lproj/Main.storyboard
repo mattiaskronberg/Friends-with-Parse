@@ -1,23 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mNT-6u-zdG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KVD-Lt-YxB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Friend Requests-->
         <scene sceneID="kFJ-Ld-2kK">
             <objects>
-                <tableViewController id="DMm-rL-K8r" sceneMemberID="viewController">
+                <tableViewController id="DMm-rL-K8r" customClass="FriendReqeustTableViewController" customModule="Friends_With_Parse" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="yqs-ld-GV3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="sc5-hS-jto">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendRequestCell" id="sc5-hS-jto" customClass="FriendRequestTableViewCell" customModule="Friends_With_Parse" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sc5-hS-jto" id="D01-mc-qZg">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSt-bz-ZR0">
+                                            <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIs-Pm-tKK">
+                                            <rect key="frame" x="541" y="5" width="51" height="30"/>
+                                            <state key="normal" title="Decline">
+                                                <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="declineFriendRequest:" destination="sc5-hS-jto" eventType="touchUpInside" id="8Ns-Vd-8R9"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4oI-tb-ysX">
+                                            <rect key="frame" x="484" y="5" width="49" height="30"/>
+                                            <state key="normal" title="Accept">
+                                                <color key="titleColor" red="0.27193967229999999" green="0.85296322599999996" blue="0.1824395986" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="acceptFriendRequest:" destination="sc5-hS-jto" eventType="touchUpInside" id="5Kg-gN-3z5"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="oIs-Pm-tKK" firstAttribute="trailing" secondItem="D01-mc-qZg" secondAttribute="trailingMargin" id="4OD-it-yyy"/>
+                                        <constraint firstItem="oIs-Pm-tKK" firstAttribute="leading" secondItem="4oI-tb-ysX" secondAttribute="trailing" constant="8" id="Bbv-2f-KY7"/>
+                                        <constraint firstAttribute="centerY" secondItem="oIs-Pm-tKK" secondAttribute="centerY" constant="1.5" id="dgB-AO-wkv"/>
+                                        <constraint firstAttribute="centerY" secondItem="SSt-bz-ZR0" secondAttribute="centerY" id="f4B-KU-U8q"/>
+                                        <constraint firstItem="SSt-bz-ZR0" firstAttribute="leading" secondItem="D01-mc-qZg" secondAttribute="leadingMargin" id="h6F-qc-eJF"/>
+                                        <constraint firstAttribute="centerY" secondItem="4oI-tb-ysX" secondAttribute="centerY" constant="1.5" id="lmX-hq-JDX"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="usernameCell" destination="SSt-bz-ZR0" id="fsx-De-Lyk"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -25,25 +64,62 @@
                             <outlet property="delegate" destination="DMm-rL-K8r" id="bpx-s8-3FG"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Friend Requests" id="0cZ-8f-CnA"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ftW-ov-v42" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="-543"/>
+            <point key="canvasLocation" x="1428" y="39"/>
         </scene>
-        <!--Friend List Table View Controller-->
+        <!--Parse Login View Controller-->
+        <scene sceneID="Sub-zG-do8">
+            <objects>
+                <viewController id="KVD-Lt-YxB" customClass="ParseLoginViewController" customModule="Friends_With_Parse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LvB-eO-Ftd"/>
+                        <viewControllerLayoutGuide type="bottom" id="DyM-ml-cCn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UGo-0c-2x0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="Wah-K3-Zlf" kind="show" identifier="friendList" id="B1G-H0-1sR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8aM-TG-9fK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-836" y="39"/>
+        </scene>
+        <!--Parse Friend Request-->
         <scene sceneID="fBs-FX-5Fa">
             <objects>
-                <tableViewController id="mNT-6u-zdG" customClass="FriendListTableViewController" customModule="Friends_With_Parse" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Parse Friend Request" id="mNT-6u-zdG" customClass="FriendListTableViewController" customModule="Friends_With_Parse" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tI0-gT-gbC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="g2I-Ji-RZ9">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" id="g2I-Ji-RZ9" customClass="FriendListTableViewCell" customModule="Friends_With_Parse" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g2I-Ji-RZ9" id="rfo-Vk-ZPN">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friend Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oo4-42-k3A">
+                                            <rect key="frame" x="8" y="11" width="132" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="Oo4-42-k3A" secondAttribute="centerY" id="lay-sB-8RR"/>
+                                        <constraint firstItem="Oo4-42-k3A" firstAttribute="leading" secondItem="rfo-Vk-ZPN" secondAttribute="leadingMargin" id="y2P-09-bXR"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="friendNameLabel" destination="Oo4-42-k3A" id="cpA-wN-X34"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -51,10 +127,121 @@
                             <outlet property="delegate" destination="mNT-6u-zdG" id="adS-85-zv9"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem systemItem="organize" id="xD6-sY-3vK">
+                            <connections>
+                                <action selector="friendRequests:" destination="mNT-6u-zdG" id="Tmz-MO-Lhc"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Parse Friend Request Starter" id="I2G-4c-kRw">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="wh1-fH-VFa">
+                            <connections>
+                                <action selector="logOut:" destination="mNT-6u-zdG" id="5YJ-So-shu"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="e0e-33-GHT">
+                            <connections>
+                                <action selector="findFriends:" destination="mNT-6u-zdG" id="TAf-K3-i63"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="Qb1-Uh-z9P" kind="show" identifier="findFriends" id="mRw-a1-W3b"/>
+                        <segue destination="DMm-rL-K8r" kind="show" identifier="friendRequests" id="Kcg-YU-OCU"/>
+                        <segue destination="KVD-Lt-YxB" kind="show" identifier="logOut" id="JFs-6V-ddT"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dgY-dH-Rqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="434" y="253"/>
+            <point key="canvasLocation" x="652" y="-713"/>
+        </scene>
+        <!--Find Friends-->
+        <scene sceneID="xcC-hO-kwp">
+            <objects>
+                <tableViewController id="Qb1-Uh-z9P" customClass="SearchFriendsTableViewController" customModule="Friends_With_Parse" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="doL-cB-fWo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" id="gph-Cq-Oi7">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="Qb1-Uh-z9P" id="L1a-F5-A0V"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" id="H8z-JJ-dwj" customClass="SearchUserTableViewCell" customModule="Friends_With_Parse" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H8z-JJ-dwj" id="iGc-PA-TcA">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="py1-N9-dhC">
+                                            <rect key="frame" x="8" y="11" width="117" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="udK-R1-egH">
+                                            <rect key="frame" x="570" y="7" width="22" height="22"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addFriend:" destination="H8z-JJ-dwj" eventType="touchUpInside" id="kFy-4m-4n2"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="udK-R1-egH" secondAttribute="centerY" constant="3.5" id="4LW-G1-FeV"/>
+                                        <constraint firstAttribute="centerY" secondItem="py1-N9-dhC" secondAttribute="centerY" id="KJU-JD-0B4"/>
+                                        <constraint firstItem="py1-N9-dhC" firstAttribute="leading" secondItem="iGc-PA-TcA" secondAttribute="leadingMargin" id="i8w-Zg-wUT"/>
+                                        <constraint firstItem="udK-R1-egH" firstAttribute="trailing" secondItem="iGc-PA-TcA" secondAttribute="trailingMargin" id="u4y-wk-ycx"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="sendRequestButton" destination="udK-R1-egH" id="azg-L9-1zj"/>
+                                    <outlet property="usernameLabel" destination="py1-N9-dhC" id="JRd-qD-Ci2"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Qb1-Uh-z9P" id="Hou-3D-knz"/>
+                            <outlet property="delegate" destination="Qb1-Uh-z9P" id="gGP-Ok-FWh"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Find Friends" id="TUX-Hf-Zgc"/>
+                    <connections>
+                        <outlet property="searchBar" destination="gph-Cq-Oi7" id="pzE-kD-hf6"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mEy-XY-jbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1404" y="-713"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zrb-5c-Npf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Wah-K3-Zlf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="D6G-2l-UPw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="sbv-mW-Zgm">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="mNT-6u-zdG" kind="relationship" relationship="rootViewController" id="wvQ-vn-48U"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ciX-lo-pHY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-122" y="-713"/>
         </scene>
     </scenes>
 </document>

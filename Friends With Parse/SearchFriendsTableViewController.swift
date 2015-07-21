@@ -1,5 +1,5 @@
 //
-//  FriendListTableViewController.swift
+//  SearchFriendsTableViewController.swift
 //  Friends With Parse
 //
 //  Created by Mattias Kronberg on 2015-07-20.
@@ -8,27 +8,23 @@
 
 import UIKit
 
-class FriendListTableViewController: UITableViewController {
+class SearchFriendsTableViewController: UITableViewController, UISearchBarDelegate {
 
-    var user: PFUser?
-    var friends = [PFUser]()
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var foundUsers = [PFUser]()
+    var friends: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user = PFUser.currentUser()
-        
-        
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        getFriends()
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -45,20 +41,20 @@ class FriendListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        println(friends.count)
-        return friends.count
+        return foundUsers.count
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("friendCell", forIndexPath: indexPath) as! FriendListTableViewCell
-        let cellData = friends[indexPath.row]
-        cell.friendNameLabel.text = cellData.username!
+        let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! SearchUserTableViewCell
+        let cellData = foundUsers[indexPath.row]
+        cell.usernameLabel.text = cellData.username!
+        cell.user = cellData
         // Configure the cell...
 
         return cell
     }
-    
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -95,70 +91,41 @@ class FriendListTableViewController: UITableViewController {
     }
     */
 
-    
+    /*
     // MARK: - Navigation
+    
+    
 
-    @IBAction func findFriends(sender: AnyObject)
-    {
-        performSegueWithIdentifier("findFriends", sender: self)
-    }
-    
-    @IBAction func friendRequests(sender: AnyObject)
-    {
-        performSegueWithIdentifier("friendRequests", sender: self)
-    }
-    
-    
-    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "findFriends"
-        {
-            var friendsArray = [String]()
-            
-            for object in friends
-            {
-                friendsArray.append(object.username!)
-                
-            }
-            
-            if let destination = segue.destinationViewController as? SearchFriendsTableViewController
-            {
-                destination.friends = friendsArray
-            }
-        }
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+    }
+    */
+    
+    // MARK: - Search Bar Delegate Methods
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        searchUser()
     }
     
+    // MARK: - Parse Querys and methods
     
-    // MARK: - Parse Querys and Methods
-    
-    
-    @IBAction func logOut(sender: AnyObject)
+    func searchUser()
     {
-        PFUser.logOutInBackgroundWithBlock{
-            (error: NSError?) -> Void in
-            if error == nil {
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                self.performSegueWithIdentifier("logOut", sender: self)
+        println("Search user")
+        let query = PFQuery(className: "_User")
+        query.whereKey("username", notContainedIn: friends!)
+        query.whereKey("username", notEqualTo: PFUser.currentUser()!.username!)
+        query.whereKey("username", hasPrefix: searchBar.text)
+        query.findObjectsInBackgroundWithBlock{
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if let users = objects as? [PFUser]
+            {
+                self.foundUsers = users
+                self.tableView.reloadData()
             }
         }
-    }
-    
-    func getFriends()
-    {
-        let relation = user?.relationForKey("friends")
-        let query = relation?.query()
-        if let relationQuery = query
-        {
-            relationQuery.findObjectsInBackgroundWithBlock{
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                if let friends = objects {
-                    self.friends = objects as! [PFUser]
-                    self.tableView.reloadData()
-                }
-            }
-        }
-        
     }
 
 }

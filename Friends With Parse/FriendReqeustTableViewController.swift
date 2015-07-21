@@ -1,5 +1,5 @@
 //
-//  FriendListTableViewController.swift
+//  FriendReqeustTableViewController.swift
 //  Friends With Parse
 //
 //  Created by Mattias Kronberg on 2015-07-20.
@@ -8,27 +8,22 @@
 
 import UIKit
 
-class FriendListTableViewController: UITableViewController {
+class FriendReqeustTableViewController: UITableViewController {
 
-    var user: PFUser?
-    var friends = [PFUser]()
+    var user = PFUser.currentUser()!
+    var requests = [PFObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user = PFUser.currentUser()
-        
-        
+        getRequests()
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        getFriends()
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -45,15 +40,16 @@ class FriendListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        println(friends.count)
-        return friends.count
+        return requests.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("friendCell", forIndexPath: indexPath) as! FriendListTableViewCell
-        let cellData = friends[indexPath.row]
-        cell.friendNameLabel.text = cellData.username!
+        let cell = tableView.dequeueReusableCellWithIdentifier("friendRequestCell", forIndexPath: indexPath) as! FriendRequestTableViewCell
+        let cellData = requests[indexPath.row]
+        cell.request = cellData
+        cell.usernameCell.text = (cellData["fromUser"] as! PFUser).username
+
         // Configure the cell...
 
         return cell
@@ -95,67 +91,29 @@ class FriendListTableViewController: UITableViewController {
     }
     */
 
-    
+    /*
     // MARK: - Navigation
 
-    @IBAction func findFriends(sender: AnyObject)
-    {
-        performSegueWithIdentifier("findFriends", sender: self)
-    }
-    
-    @IBAction func friendRequests(sender: AnyObject)
-    {
-        performSegueWithIdentifier("friendRequests", sender: self)
-    }
-    
-    
-    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "findFriends"
-        {
-            var friendsArray = [String]()
-            
-            for object in friends
-            {
-                friendsArray.append(object.username!)
-                
-            }
-            
-            if let destination = segue.destinationViewController as? SearchFriendsTableViewController
-            {
-                destination.friends = friendsArray
-            }
-        }
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
     }
+    */
     
+    // MARK: - Parse Querys
     
-    // MARK: - Parse Querys and Methods
-    
-    
-    @IBAction func logOut(sender: AnyObject)
+    func getRequests()
     {
-        PFUser.logOutInBackgroundWithBlock{
-            (error: NSError?) -> Void in
-            if error == nil {
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                self.performSegueWithIdentifier("logOut", sender: self)
-            }
-        }
-    }
-    
-    func getFriends()
-    {
-        let relation = user?.relationForKey("friends")
-        let query = relation?.query()
-        if let relationQuery = query
-        {
-            relationQuery.findObjectsInBackgroundWithBlock{
-                (objects: [AnyObject]?, error: NSError?) -> Void in
-                if let friends = objects {
-                    self.friends = objects as! [PFUser]
-                    self.tableView.reloadData()
-                }
+        let query = PFQuery(className: "friendRequest")
+        query.whereKey("toUser", equalTo: user)
+        query.whereKey("status", equalTo: "pending")
+        query.includeKey("fromUser")
+        query.findObjectsInBackgroundWithBlock{
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            if let friendRequests = objects as? [PFObject] {
+                self.requests = friendRequests
+                self.tableView.reloadData()
             }
         }
         
